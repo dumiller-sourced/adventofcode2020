@@ -18,8 +18,6 @@ func readFile(expenseFile string) (expenses []int) {
 	scanFile := bufio.NewScanner(expenseData)
 	scanFile.Split(bufio.ScanLines)
 
-	// var expenses []int
-
 	for scanFile.Scan() {
 		convertInt, _ := strconv.Atoi(scanFile.Text())
 		expenses = append(expenses, convertInt)
