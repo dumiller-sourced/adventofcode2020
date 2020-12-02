@@ -7,8 +7,58 @@ import (
 	"strconv"
 )
 
+func readFile(expenseFile string) []int {
+	expenseData, fileError := os.Open(expenseFile)
+
+	if fileError != nil {
+		fmt.Println("Error encountered when opening file:", fileError)
+		return
+	}
+
+	scanFile := bufio.NewScanner(expenseData)
+	scanFile.Split(bufio.ScanLines)
+
+	var expenses []int
+
+	for scanFile.Scan() {
+		convertInt, _ := strconv.Atoi(scanFile.Text())
+		expenses = append(expenses, convertInt)
+	}
+
+	expenseData.Close()
+
+	return expenses
+}
+
+func twoExpenses(expenses []int) (int, int) {
+	var expenseTotal int
+	var expense1, expense2 int
+
+Calculator:
+	for i := 0; i < len(expenses); i++ {
+		for x := i + 1; x < len(expenses); x++ {
+			expenseTotal = expenses[i] + expenses[x]
+			if expenseTotal == 2020 {
+				expense1, expense2 = expenses[i], expenses[x]
+				break Calculator
+			}
+		}
+	}
+
+	return expense1, expense2
+}
+
 func main() {
-	expenseData, fileError := os.Open("expenses.txt")
+
+	expenses := readFile("expenses.txt")
+
+	expense1, expense2 := twoExpenses(expenses)
+
+	fmt.Printf("Expense #1: %d \nExpense #2: %d\n", expense1, expense2)
+	twoProduct := expense1 * expense2
+	fmt.Printf("Expense #1 multiplied by Expense #2 = %d\n", twoProduct)
+
+	/* expenseData, fileError := os.Open("expenses.txt")
 
 	if fileError != nil {
 		fmt.Println("Error encountered when opening file:", fileError)
@@ -25,24 +75,19 @@ func main() {
 		expenses = append(expenses, convertInt)
 	}
 
-	expenseData.Close()
+	expenseData.Close() */
 
-	var expenseTotal int
-	var expense1, expense2 int
+	/* var expenseTotal int
+		var expense1, expense2 int
 
-Calculator:
-	for i := 0; i < len(expenses); i++ {
-		for x := i + 1; x < len(expenses); x++ {
-			expenseTotal = expenses[i] + expenses[x]
-			if expenseTotal == 2020 {
-				expense1, expense2 = expenses[i], expenses[x]
-				break Calculator
+	Calculator:
+		for i := 0; i < len(expenses); i++ {
+			for x := i + 1; x < len(expenses); x++ {
+				expenseTotal = expenses[i] + expenses[x]
+				if expenseTotal == 2020 {
+					expense1, expense2 = expenses[i], expenses[x]
+					break Calculator
+				}
 			}
-		}
-	}
-
-	fmt.Printf("Expense #1: %d \nExpense #2: %d\n", expense1, expense2)
-	totalProduct := expense1 * expense2
-	fmt.Printf("Expense #1 multiplied by Expense #2 = %d\n", totalProduct)
-
+		} */
 }
