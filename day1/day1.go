@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-func readFile(expenseFile string) []int {
+func readFile(expenseFile string) (expenses []int) {
 	expenseData, fileError := os.Open(expenseFile)
 
 	if fileError != nil {
@@ -18,7 +18,7 @@ func readFile(expenseFile string) []int {
 	scanFile := bufio.NewScanner(expenseData)
 	scanFile.Split(bufio.ScanLines)
 
-	var expenses []int
+	// var expenses []int
 
 	for scanFile.Scan() {
 		convertInt, _ := strconv.Atoi(scanFile.Text())
@@ -27,12 +27,11 @@ func readFile(expenseFile string) []int {
 
 	expenseData.Close()
 
-	return expenses
+	return
 }
 
-func twoExpenses(expenses []int) (int, int) {
+func twoExpenses(expenses []int) (expense1 int, expense2 int) {
 	var expenseTotal int
-	var expense1, expense2 int
 
 Calculator:
 	for i := 0; i < len(expenses); i++ {
@@ -48,6 +47,26 @@ Calculator:
 	return expense1, expense2
 }
 
+func threeExpenses(expenses []int) (expense1 int, expense2 int, expense3 int) {
+
+	var expenseTotal int
+
+Calculator:
+	for i := 0; i < len(expenses); i++ {
+		for x := i + 1; x < len(expenses); x++ {
+			for y := i + 2; y < len(expenses); y++ {
+				expenseTotal = expenses[i] + expenses[x] + expenses[y]
+				if expenseTotal == 2020 {
+					expense1, expense2, expense3 = expenses[i], expenses[x], expenses[y]
+					break Calculator
+				}
+			}
+		}
+	}
+
+	return
+}
+
 func main() {
 
 	expenses := readFile("expenses.txt")
@@ -58,36 +77,10 @@ func main() {
 	twoProduct := expense1 * expense2
 	fmt.Printf("Expense #1 multiplied by Expense #2 = %d\n", twoProduct)
 
-	/* expenseData, fileError := os.Open("expenses.txt")
+	expense1, expense2, expense3 := threeExpenses(expenses)
 
-	if fileError != nil {
-		fmt.Println("Error encountered when opening file:", fileError)
-		return
-	}
+	fmt.Printf("Expense #1: %d \nExpense #2: %d\nExpense #3: %d\n", expense1, expense2, expense3)
+	threeProduct := expense1 * expense2 * expense3
+	fmt.Printf("Expense #1, #2 and #3 mulitplied together = %d\n", threeProduct)
 
-	readFile := bufio.NewScanner(expenseData)
-	readFile.Split(bufio.ScanLines)
-
-	var expenses []int
-
-	for readFile.Scan() {
-		convertInt, _ := strconv.Atoi(readFile.Text())
-		expenses = append(expenses, convertInt)
-	}
-
-	expenseData.Close() */
-
-	/* var expenseTotal int
-		var expense1, expense2 int
-
-	Calculator:
-		for i := 0; i < len(expenses); i++ {
-			for x := i + 1; x < len(expenses); x++ {
-				expenseTotal = expenses[i] + expenses[x]
-				if expenseTotal == 2020 {
-					expense1, expense2 = expenses[i], expenses[x]
-					break Calculator
-				}
-			}
-		} */
 }
