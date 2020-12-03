@@ -3,9 +3,11 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func readFile(passwordFile string) (passwords []string) {
@@ -118,6 +120,8 @@ func passwordPolicy(passwords []string, policyVersion string) (numValid int) {
 
 func main() {
 
+	start := time.Now()
+
 	passwords := readFile("password.txt")
 
 	oldPolicyValid := passwordPolicy(passwords, "old")
@@ -125,4 +129,7 @@ func main() {
 
 	fmt.Printf("Number of Valid passwords using OLD policy: %d\n", oldPolicyValid)
 	fmt.Printf("Number of Valid passwords using NEW policy: %d\n", newPolicyValid)
+
+	elapsed := time.Since(start)
+	log.Printf("Program execution took %s", elapsed)
 }
