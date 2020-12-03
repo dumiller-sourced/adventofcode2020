@@ -44,7 +44,7 @@ func parseString(stringList []string) (num1 int, num2 int, target string, pw str
 
 func validateOldPassword(min int, max int, target string, pw string) (validatedPW bool) {
 
-	fmt.Printf("Validating password %s: The character %s must be present between %d and %d times.\n", pw, target, min, max)
+	//fmt.Printf("Validating password %s: The character %s must be present between %d and %d times.\n", pw, target, min, max)
 
 	var countChar int = 0
 
@@ -54,7 +54,7 @@ func validateOldPassword(min int, max int, target string, pw string) (validatedP
 		}
 	}
 
-	fmt.Printf("Character %s found %d times. ", target, countChar)
+	//fmt.Printf("Character %s found %d times. ", target, countChar)
 
 	if countChar >= min {
 		if countChar <= max {
@@ -69,7 +69,7 @@ func validateOldPassword(min int, max int, target string, pw string) (validatedP
 
 func validateNewPassword(pos1 int, pos2 int, target string, pw string) (validatedPW bool) {
 
-	fmt.Printf("Validating password %s: The character %s must be present at positions %d and %d\n", pw, target, pos1, pos2)
+	//fmt.Printf("Validating password %s: The character %s must be present at positions %d and %d\n", pw, target, pos1, pos2)
 
 	var checkPos1 bool = false
 	var checkPos2 bool = false
@@ -84,7 +84,7 @@ func validateNewPassword(pos1 int, pos2 int, target string, pw string) (validate
 		}
 	}
 
-	fmt.Printf("Position 1 match: %t. Position 2 match: %t. ", checkPos1, checkPos2)
+	//fmt.Printf("Position 1 match: %t. Position 2 match: %t. ", checkPos1, checkPos2)
 
 	if checkPos1 != checkPos2 {
 		validatedPW = true
@@ -108,7 +108,7 @@ func passwordPolicy(passwords []string, policyVersion string) (numValid int) {
 			validatedPW = validateNewPassword(num1, num2, target, pw)
 		}
 
-		fmt.Printf("Password Valid?: %t\n", validatedPW)
+		//fmt.Printf("Password Valid?: %t\n", validatedPW)
 
 		if validatedPW == true {
 			numValid++
